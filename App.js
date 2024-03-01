@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Button, Text } from 'react-native';
 
-export default function App() {
+// Import des composants des différentes pages
+import ProduitScreen from './ProduitScreen';
+import SensorsScreen from './SensorsScreen';
+import GatewayScreen from './GatewayScreen';
+import StatisticScreen from './StatisticScreen';
+
+const Tab = createBottomTabNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Produit" component={ProduitScreen} />
+        <Tab.Screen name="Sensors" component={SensorsScreen} />
+        <Tab.Screen name="Gateway" component={GatewayScreen} />
+        <Tab.Screen name="Statistic" component={StatisticScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
