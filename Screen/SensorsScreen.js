@@ -56,14 +56,7 @@ const App = () => {
           shadowOpacity: 0.5,
           justifyContent: 'center',
         }}>
-        <Text
-          style={{
-            fontSize: 32,
-            marginLeft: 16,
-            fontWeight: 'bold',
-          }}>
-          Sensors
-        </Text>
+        
         <TextInput
           style={{
             height: 40,

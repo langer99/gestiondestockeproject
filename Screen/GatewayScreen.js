@@ -1,48 +1,36 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, FlatList, StatusBar, TextInput,TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, FlatList, StatusBar, TextInput, TouchableOpacity } from 'react-native';
 
-export const data = [
+export const gateway = [
   {
-    name: 'iphone 15 pro',
-    category: 'elecroniques',
-    price: '$2.00',
-    quantity: '100',    
+    name: 'esp32',
+    type: 'esp',
+    adresseIp: '00000',
+    adresseMac: '1000000',    
   },
   {
-    name: 'oppo reno 7',
-    category: 'elecroniques',
-    price: '$3.00',
-    quantity: '100',    
+    name: 'esp8266',
+    type: 'esp',
+    adresseIp: '0000098',
+    adresseMac: '1004440',    
   },
   {
-    name: 'milka',
-    category: 'alimentations et boissons',
-    price: '$1.00',
-    quantity: '100',    
+    name: 'arduino-uno',
+    type: 'arduino',
+    adresseIp: '1111',
+    adresseMac: '090909',    
   },
   {
-    name: 'ballon',
-    category: 'sports et plein air',
-    price: '$1.00',
-    quantity: '500',    
+    name: 'atmega-260',
+    type: 'arduino',
+    adresseIp: '55454545',
+    adresseMac: '7373737',    
   },
   {
-    name: 'cahier 200 pages',
-    category: 'educations',
-    price: '$18.00',
-    quantity: '400',    
-  },
-  {
-    name: 'pulle zara',
-    category: 'vetements et accessoires',
-    price: '$18.00',
-    quantity: '400',    
-  },
-  {
-    name: 'climatiseur',
-    category: 'maisons et jardins',
-    price: '$18.00',
-    quantity: '400',    
+    name: 'raspberry pi4',
+    type: 'raspberry',
+    adresseIp: '8745646',
+    adresseMac: '62524312',    
   },
 ];
 
@@ -51,7 +39,7 @@ const { width } = Dimensions.get('window');
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredData = data.filter(item =>
+  const filteredData = gateway.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -62,7 +50,7 @@ const App = () => {
         style={{
           width: '100%',
           height: 100,
-          marginTop:50,
+          marginTop: 50,
           backgroundColor: '#D3D3D3',
           shadowColor: '#000000',
           shadowOffset: {
@@ -73,14 +61,7 @@ const App = () => {
           shadowOpacity: 0.5,
           justifyContent: 'center',
         }}>
-        <Text
-          style={{
-            fontSize: 32,
-            marginLeft: 16,
-            fontWeight: 'bold',
-          }}>
-          Produits
-        </Text>
+        
         <TextInput
           style={{
             height: 40,
@@ -98,7 +79,7 @@ const App = () => {
         />
       </View>
       <FlatList
-        style={{ marginTop: 8 }}
+        style={{ marginTop: 10 }}
         data={filteredData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <Card item={item} />}
@@ -109,22 +90,13 @@ const App = () => {
 
 const Card = ({ item }) => {
   let categoryColor = '#00ff00';
-  if (item.category.toLowerCase() === 'electroniques') {
+  if (item.type === 'arduino') {
+    categoryColor = '#ffa500';
+  } else if (item.type === 'esp') {
     categoryColor = '#ff0000';
-  } else if (item.category.toLowerCase() === 'alimentations et boissons') {
-    categoryColor = '#0000ff';
-  } else if (item.category.toLowerCase() === 'sports et plein air') {
-    categoryColor = '#ffff00';
-  } else if (item.category.toLowerCase() === 'educations') {
-    categoryColor = '#800080';
-  } else if (item.category.toLowerCase() === 'vetements et accessoires') {
-    categoryColor = '#008000';
-  } else if (item.category.toLowerCase() === 'maisons et jardins') {
-    categoryColor = '#ff69b4';
+  } else if (item.type === 'raspberry') {
+    categoryColor = '#0000FF';
   }
-  
-
-
   return (
     <TouchableOpacity
       style={{
@@ -132,11 +104,11 @@ const Card = ({ item }) => {
         shadowColor: '#000000',
         shadowOffset: {
           width: 0,
-          height: 2,
+          height: 3,
         },
         shadowRadius: 3,
         shadowOpacity: 0.5,
-        height: 70,
+        height: 90,
         width: width - 30,
         alignItems: 'center',
         backgroundColor: '#ffffff',
@@ -145,8 +117,8 @@ const Card = ({ item }) => {
         marginVertical: 8,
         marginHorizontal: 15,
       }}
-      onPress={()=>console.log(item)}
-      >
+      onPress={() => console.log(item)}
+    >
       <View
         style={{
           flex: 1,
@@ -164,27 +136,13 @@ const Card = ({ item }) => {
           {item.name}
         </Text>
         <Text style={{ alignItems: 'flex-end', color: categoryColor }}>
-          {item.category}
-        </Text>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          marginHorizontal: 20,
-          marginVertical: 10,
-          alignItems: 'flex-end',
-        }}>
-        <Text
-          style={{
-            marginBottom: 4,
-            fontSize: 18,
-            fontWeight: '100',
-          }}>
-          {item.price}
+          Type: {item.type}
         </Text>
         <Text style={{ alignItems: 'flex-end', color: '#808080', fontSize: 12 }}>
-          {item.quantity}
+          IP Address: {item.adresseIp}
+        </Text>
+        <Text style={{ alignItems: 'flex-end', color: '#808080', fontSize: 12 }}>
+          MAC Address: {item.adresseMac}
         </Text>
       </View>
     </TouchableOpacity>
